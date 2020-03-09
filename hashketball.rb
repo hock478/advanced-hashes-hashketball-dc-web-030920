@@ -24,11 +24,12 @@ def num_points_scored(players_name)
 
   
   while i <  game[:home][:players].length
-  homeplayers = game[:home][:players][i]
-  awayplayers = game[:away][:players][i]
-    if game[:home][:players][i][:player_name] == players_name
-      return homeplayers[:points]
-    elsif game[:away][:players][i][:player_name] == players_name
+  homeplayers = game[:home][:players][i] # home player at i
+  awayplayers = game[:away][:players][i] # away player at i
+    #checks to see if the argument given matches a home or away players name
+    if homeplayers[:player_name] == players_name 
+      return homeplayers[:points] 
+    elsif awayplayers[:player_name] == players_name
       return awayplayers[:points]
     end
     i += 1
@@ -43,9 +44,10 @@ def shoe_size(players_name)
   while i <  game[:home][:players].length
   homeplayers = game[:home][:players][i]
   awayplayers = game[:away][:players][i]
-    if game[:home][:players][i][:player_name] == players_name
+  
+    if homeplayers[:player_name] == players_name
       return homeplayers[:shoe]
-    elsif game[:away][:players][i][:player_name] == players_name
+    elsif awayplayers[:player_name] == players_name
       return awayplayers[:shoe]
     end
     i += 1
@@ -58,8 +60,8 @@ end
 def team_colors(team)
   
    game = game_hash
-   
-   if game[:home][:team_name] == team
+   #checks to see if argument matches the home/away team name
+   if game[:home][:team_name] == team 
       return game[:home][:colors]
     elsif game[:away][:team_name] == team
       return game[:away][:colors]
@@ -72,7 +74,7 @@ def team_names
   
    game = game_hash
    arr = []
-   
+   #creates empty array and adds both team names as elements
   arr << game[:home][:team_name]
   arr << game[:away][:team_name]
   return arr
@@ -118,11 +120,17 @@ end
 def big_shoe_rebounds
    game = game_hash
   i = 0
+  #starting point of the homeplayers shoe size
   home_most_shoe = game[:home][:players][0][:shoe]
+  
+  #starting point of the awayplayers shoe size
   away_most_shoe = game[:home][:players][0][:shoe]
   
+
   home_player_rebounds = 0
   away_player_rebounds = 0
+  
+  #while loop #1: find largest shoe size and set home_player_rebounds to that players rebounds
   
   while i <  game[:home][:players].length do
     if game[:home][:players][i][:shoe] > home_most_shoe
@@ -131,6 +139,9 @@ def big_shoe_rebounds
     end
      i += 1
   end
+  
+  #while loop #2: find largest shoe size and set away_player_rebounds to that players rebounds
+  
     index = 0
     while index <  game[:away][:players].length do
       if game[:away][:players][index][:shoe] > away_most_shoe
@@ -139,7 +150,8 @@ def big_shoe_rebounds
       end
       index += 1
   end
-  
+    
+    #find out who has the biggest shoe size between both teams and return that players rebounds
     if home_most_shoe < away_most_shoe
       return away_player_rebounds
     else 
@@ -152,11 +164,16 @@ end
 def most_points_scored
   game = game_hash
   i = 0
+  #starting point for homeplayers most points
   home_most = game[:home][:players][0][:points]
+  
+  #starting point for awayplayers most points
   away_most = game[:home][:players][0][:points]
   
   home_player = ""
   away_player = ""
+  
+  #while loop #1: find largest points per player and set home_player to that players name
   
   while i <  game[:home][:players].length do
     if game[:home][:players][i][:points] > home_most
@@ -166,6 +183,9 @@ def most_points_scored
      i += 1
   end
     index = 0
+    
+     #while loop #2: find largest points per player and set away_player to that players name
+     
     while index <  game[:away][:players].length do
       if game[:away][:players][index][:points] > away_most
         away_most = game[:away][:players][index][:points]
@@ -173,7 +193,9 @@ def most_points_scored
       end
       index += 1
   end
-  
+    
+    #compare most point per player on each team and return that players name
+    
     if home_most < away_most
       return away_player
     else 
@@ -187,16 +209,20 @@ def winning_team
   total_home = 0
   total_away = 0
   
+  #find total points for home
   while i < game[:home][:players].length do
       total_home += game[:home][:players][i][:points]
       i += 1
   end
+  
   index = 0
+  #find total points for away
    while index < game[:away][:players].length do
       total_away += game[:away][:players][index][:points]
       index += 1
   end
   
+  #return the larger of points(game winner)
   if total_home > total_away
     return game[:home][:team_name]
   else
@@ -208,12 +234,16 @@ end
 def player_with_longest_name
   game = game_hash
   i = 0
-  home_most = game[:home][:players][0][:player_name].length
+  #starting point for the longest home player name
+  home_most = game[:home][:players][0][:player_name].length 
+  
+  #starting point for the longest away player name
   away_most = game[:home][:players][0][:player_name].length
   
   home_player = ""
   away_player = ""
   
+  #determines who has the longest name and sets home_player to that players name
   while i <  game[:home][:players].length do
     if game[:home][:players][i][:player_name].length > home_most
       home_most = game[:home][:players][i][:player_name].length
@@ -221,7 +251,11 @@ def player_with_longest_name
     end
      i += 1
   end
+  
+  
     index = 0
+    
+     #determines who has the longest name and sets away_player to that players name
     while index <  game[:away][:players].length do
       if game[:away][:players][index][:player_name].length > away_most
         away_most = game[:away][:players][index][:player_name].length
@@ -229,7 +263,9 @@ def player_with_longest_name
       end
       index += 1
   end
-  
+    
+    #Compares the length of each teams longest player name and returns the largest between the two
+    
     if home_most < away_most
       return away_player
     else 
@@ -238,6 +274,7 @@ def player_with_longest_name
 end
 
 def long_name_steals_a_ton?
+  
   long_player = player_with_longest_name
   
   game = game_hash
@@ -248,6 +285,7 @@ def long_name_steals_a_ton?
   home_player = ""
   away_player = ""
   
+  #finds player with most steals on home team
   while i <  game[:home][:players].length do
     if game[:home][:players][i][:steals] > home_most
       home_most = game[:home][:players][i][:steals]
@@ -255,7 +293,10 @@ def long_name_steals_a_ton?
     end
      i += 1
   end
+  
     index = 0
+    
+    #find player with most steals on the away team
     while index <  game[:away][:players].length do
       if game[:away][:players][index][:steals] > away_most
         away_most = game[:away][:players][index][:steals]
@@ -263,7 +304,9 @@ def long_name_steals_a_ton?
       end
       index += 1
   end
-  
+    
+    #returns true or false based on if the player with the most steals is the player with the longest name
+    
     if home_most < away_most
       return away_player == long_player
     else 
